@@ -1,6 +1,6 @@
-<svg viewBox="0 0 680 616" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ttl desc" font-family="-apple-system, Helvetica, Arial, sans-serif">
-  <title id="ttl">The full Prism map: tools, runtime flow, and vocabulary</title>
-  <desc id="desc">PyTorch runs the math; GPT-2 is built on it; TransformerLens wraps GPT-2 and adds hooks. A sentence becomes tokens, flows through the residual stream across 12 layers, and produces a next-token guess; hooks tap the stream into a cache (one token's 768-number smoothie). Vocabulary: model = company holding 12 layers; layer = one worker holding 3072 neurons; neuron = one gauge (a single number); tensor = any box of numbers.</desc>
+<svg viewBox="0 0 680 690" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ttl desc" font-family="-apple-system, Helvetica, Arial, sans-serif">
+  <title id="ttl">Prism concept map: tools, flow, vocabulary, and neuron vs feature</title>
+  <desc id="desc">PyTorch runs the math; GPT-2 built on it; TransformerLens wraps it with hooks. A sentence becomes tokens, flows through the 768-wide residual stream across 12 layers, and produces a next-token guess; hooks tap it into a cache. Model = company (12 layers); layer = one worker (attention + 3072 neurons); neuron = a detector inside a layer. The belt/smoothie is 768 dimensions, NOT neurons. Goal: a messy neuron becomes a clean feature via the SAE un-mixer.</desc>
   <style>
     text { font-size: 13px; }
     .t  { font-size: 14px; font-weight: 500; }
@@ -16,6 +16,8 @@
     .c-purple .t   { fill: #4527a0; }  .c-purple .ts { fill: #6a4bab; }
     .c-amber rect  { fill: #FFF3E0; stroke: #f0a030; stroke-width: 1.2; }
     .c-amber .t    { fill: #8a5a00; }  .c-amber .ts { fill: #a6741a; }
+    .c-green rect  { fill: #E6F4EA; stroke: #34a853; stroke-width: 1.2; }
+    .c-green .t    { fill: #14532d; }  .c-green .ts { fill: #256a3a; }
   </style>
 
   <defs>
@@ -24,7 +26,7 @@
     </marker>
   </defs>
 
-  <!-- SECTION 1: THE TOOLS -->
+  <!-- SECTION 1: TOOLS -->
   <text class="th" x="30" y="26">1 · the tools (what runs what)</text>
   <g class="c-gray">
     <rect x="60" y="36" width="560" height="46" rx="8"/>
@@ -45,61 +47,80 @@
   </g>
 
   <!-- SECTION 2: RUNTIME FLOW -->
-  <text class="th" x="30" y="242">2 · what happens when you run a sentence</text>
+  <text class="th" x="30" y="240">2 · what happens when you run a sentence</text>
   <g class="c-gray">
-    <rect x="40" y="256" width="125" height="52" rx="8"/>
-    <text class="t" x="102" y="278" text-anchor="middle">your sentence</text>
-    <text class="ts" x="102" y="294" text-anchor="middle">text you type</text>
+    <rect x="40" y="254" width="125" height="52" rx="8"/>
+    <text class="t" x="102" y="276" text-anchor="middle">your sentence</text>
+    <text class="ts" x="102" y="292" text-anchor="middle">text you type</text>
   </g>
-  <line x1="165" y1="282" x2="193" y2="282" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="165" y1="280" x2="193" y2="280" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
   <g class="c-gray">
-    <rect x="195" y="256" width="125" height="52" rx="8"/>
-    <text class="t" x="257" y="278" text-anchor="middle">tokens</text>
-    <text class="ts" x="257" y="294" text-anchor="middle">word-chunks</text>
+    <rect x="195" y="254" width="125" height="52" rx="8"/>
+    <text class="t" x="257" y="276" text-anchor="middle">tokens</text>
+    <text class="ts" x="257" y="292" text-anchor="middle">word-chunks</text>
   </g>
-  <line x1="320" y1="282" x2="348" y2="282" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="320" y1="280" x2="348" y2="280" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
   <g class="c-blue">
-    <rect x="350" y="256" width="125" height="52" rx="8"/>
-    <text class="t" x="412" y="278" text-anchor="middle">residual stream</text>
-    <text class="ts" x="412" y="294" text-anchor="middle">the belt · 12 layers</text>
+    <rect x="350" y="254" width="125" height="52" rx="8"/>
+    <text class="t" x="412" y="276" text-anchor="middle">residual stream</text>
+    <text class="ts" x="412" y="292" text-anchor="middle">the belt · 768 dims</text>
   </g>
-  <line x1="475" y1="282" x2="503" y2="282" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="475" y1="280" x2="503" y2="280" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
   <g class="c-gray">
-    <rect x="505" y="256" width="125" height="52" rx="8"/>
-    <text class="t" x="567" y="278" text-anchor="middle">next-token guess</text>
-    <text class="ts" x="567" y="294" text-anchor="middle">the output</text>
+    <rect x="505" y="254" width="125" height="52" rx="8"/>
+    <text class="t" x="567" y="276" text-anchor="middle">next-token guess</text>
+    <text class="ts" x="567" y="292" text-anchor="middle">the output</text>
   </g>
-  <line x1="412" y1="308" x2="412" y2="338" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="412" y1="306" x2="412" y2="336" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
   <g class="c-amber">
-    <rect x="300" y="340" width="225" height="48" rx="8"/>
-    <text class="t" x="412" y="360" text-anchor="middle">hooks → cache</text>
-    <text class="ts" x="412" y="376" text-anchor="middle">one token's 768-number smoothie</text>
+    <rect x="300" y="338" width="225" height="48" rx="8"/>
+    <text class="t" x="412" y="358" text-anchor="middle">hooks → cache</text>
+    <text class="ts" x="412" y="374" text-anchor="middle">one token's 768-number smoothie</text>
   </g>
-  <text class="ts" x="540" y="368" text-anchor="start" fill="#a6741a">◀ Day 2</text>
+  <text class="ts" x="540" y="366" text-anchor="start" fill="#a6741a">◀ Day 2</text>
 
   <!-- SECTION 3: VOCABULARY -->
-  <text class="th" x="30" y="422">3 · the vocabulary (how the words nest)</text>
+  <text class="th" x="30" y="418">3 · vocabulary: how the words nest</text>
   <g class="c-blue">
-    <rect x="30" y="434" width="190" height="62" rx="8"/>
-    <text class="t" x="125" y="460" text-anchor="middle">model = company</text>
-    <text class="ts" x="125" y="478" text-anchor="middle">holds 12 layers</text>
+    <rect x="30" y="430" width="190" height="62" rx="8"/>
+    <text class="t" x="125" y="456" text-anchor="middle">model = company</text>
+    <text class="ts" x="125" y="474" text-anchor="middle">holds 12 layers</text>
   </g>
-  <line x1="220" y1="465" x2="250" y2="465" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="220" y1="461" x2="250" y2="461" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
   <g class="c-teal">
-    <rect x="250" y="434" width="170" height="62" rx="8"/>
-    <text class="t" x="335" y="460" text-anchor="middle">layer = one worker</text>
-    <text class="ts" x="335" y="478" text-anchor="middle">holds 3,072 neurons</text>
+    <rect x="250" y="430" width="190" height="62" rx="8"/>
+    <text class="t" x="345" y="456" text-anchor="middle">layer = one worker</text>
+    <text class="ts" x="345" y="474" text-anchor="middle">attention + 3,072 neurons</text>
   </g>
-  <line x1="420" y1="465" x2="450" y2="465" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="440" y1="461" x2="470" y2="461" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
   <g class="c-purple">
-    <rect x="450" y="434" width="200" height="62" rx="8"/>
-    <text class="t" x="550" y="460" text-anchor="middle">neuron = one gauge</text>
-    <text class="ts" x="550" y="478" text-anchor="middle">a single number</text>
+    <rect x="470" y="430" width="180" height="62" rx="8"/>
+    <text class="t" x="560" y="456" text-anchor="middle">neuron</text>
+    <text class="ts" x="560" y="474" text-anchor="middle">detector inside a layer</text>
   </g>
-  <text class="ts" x="30" y="516" text-anchor="start" fill="#5f6368">each arrow = zoom in one level deeper</text>
-  <g class="c-gray">
-    <rect x="30" y="528" width="620" height="52" rx="8"/>
-    <text class="t" x="340" y="551" text-anchor="middle">tensor = a box of numbers</text>
-    <text class="ts" x="340" y="569" text-anchor="middle">a token's 768-number smoothie is one tensor; the weights are tensors too</text>
+  <g class="c-amber">
+    <rect x="30" y="504" width="620" height="42" rx="8"/>
+    <text class="t" x="340" y="524" text-anchor="middle">heads up: the belt / smoothie = 768 dimensions</text>
+    <text class="ts" x="340" y="539" text-anchor="middle">those aren't neurons — neurons (3,072) live inside each layer</text>
+  </g>
+
+  <!-- SECTION 4: THE GOAL -->
+  <text class="th" x="30" y="574">4 · the goal: messy neurons → clean features</text>
+  <g class="c-purple">
+    <rect x="30" y="586" width="180" height="60" rx="8"/>
+    <text class="t" x="120" y="612" text-anchor="middle">neuron</text>
+    <text class="ts" x="120" y="630" text-anchor="middle">messy — what we have</text>
+  </g>
+  <line x1="210" y1="616" x2="250" y2="616" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <g class="c-amber">
+    <rect x="250" y="586" width="120" height="60" rx="8"/>
+    <text class="t" x="310" y="612" text-anchor="middle">SAE</text>
+    <text class="ts" x="310" y="630" text-anchor="middle">the un-mixer</text>
+  </g>
+  <line x1="370" y1="616" x2="410" y2="616" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <g class="c-green">
+    <rect x="410" y="586" width="240" height="60" rx="8"/>
+    <text class="t" x="530" y="612" text-anchor="middle">feature</text>
+    <text class="ts" x="530" y="630" text-anchor="middle">clean, one concept — what we want</text>
   </g>
 </svg>
