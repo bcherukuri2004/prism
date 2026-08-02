@@ -1,0 +1,105 @@
+<svg viewBox="0 0 680 616" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ttl desc" font-family="-apple-system, Helvetica, Arial, sans-serif">
+  <title id="ttl">The full Prism map: tools, runtime flow, and vocabulary</title>
+  <desc id="desc">PyTorch runs the math; GPT-2 is built on it; TransformerLens wraps GPT-2 and adds hooks. A sentence becomes tokens, flows through the residual stream across 12 layers, and produces a next-token guess; hooks tap the stream into a cache (one token's 768-number smoothie). Vocabulary: model = company holding 12 layers; layer = one worker holding 3072 neurons; neuron = one gauge (a single number); tensor = any box of numbers.</desc>
+  <style>
+    text { font-size: 13px; }
+    .t  { font-size: 14px; font-weight: 500; }
+    .ts { font-size: 11.5px; }
+    .th { font-size: 14px; font-weight: 500; fill: #3a3f45; }
+    .c-gray rect   { fill: #F1F2F4; stroke: #9aa0a6; stroke-width: 1.2; }
+    .c-gray .t     { fill: #33373b; }  .c-gray .ts { fill: #5f6368; }
+    .c-blue rect   { fill: #E6F1FB; stroke: #2f7ed8; stroke-width: 1.2; }
+    .c-blue .t     { fill: #0C447C; }  .c-blue .ts { fill: #2f6aa8; }
+    .c-teal rect   { fill: #E0F2F1; stroke: #009688; stroke-width: 1.2; }
+    .c-teal .t     { fill: #00504a; }  .c-teal .ts { fill: #00786e; }
+    .c-purple rect { fill: #EDE7F6; stroke: #7e57c2; stroke-width: 1.2; }
+    .c-purple .t   { fill: #4527a0; }  .c-purple .ts { fill: #6a4bab; }
+    .c-amber rect  { fill: #FFF3E0; stroke: #f0a030; stroke-width: 1.2; }
+    .c-amber .t    { fill: #8a5a00; }  .c-amber .ts { fill: #a6741a; }
+  </style>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <!-- SECTION 1: THE TOOLS -->
+  <text class="th" x="30" y="26">1 · the tools (what runs what)</text>
+  <g class="c-gray">
+    <rect x="60" y="36" width="560" height="46" rx="8"/>
+    <text class="t" x="340" y="58" text-anchor="middle">PyTorch</text>
+    <text class="ts" x="340" y="74" text-anchor="middle">the engine — runs all tensor math</text>
+  </g>
+  <line x1="340" y1="84" x2="340" y2="98" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <g class="c-blue">
+    <rect x="60" y="100" width="560" height="46" rx="8"/>
+    <text class="t" x="340" y="122" text-anchor="middle">GPT-2 — the AI (the "company")</text>
+    <text class="ts" x="340" y="138" text-anchor="middle">blueprint + 124M learned weights</text>
+  </g>
+  <line x1="340" y1="148" x2="340" y2="162" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <g class="c-teal">
+    <rect x="60" y="164" width="560" height="46" rx="8"/>
+    <text class="t" x="340" y="186" text-anchor="middle">TransformerLens</text>
+    <text class="ts" x="340" y="202" text-anchor="middle">wraps GPT-2, adds hooks to peek inside</text>
+  </g>
+
+  <!-- SECTION 2: RUNTIME FLOW -->
+  <text class="th" x="30" y="242">2 · what happens when you run a sentence</text>
+  <g class="c-gray">
+    <rect x="40" y="256" width="125" height="52" rx="8"/>
+    <text class="t" x="102" y="278" text-anchor="middle">your sentence</text>
+    <text class="ts" x="102" y="294" text-anchor="middle">text you type</text>
+  </g>
+  <line x1="165" y1="282" x2="193" y2="282" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <g class="c-gray">
+    <rect x="195" y="256" width="125" height="52" rx="8"/>
+    <text class="t" x="257" y="278" text-anchor="middle">tokens</text>
+    <text class="ts" x="257" y="294" text-anchor="middle">word-chunks</text>
+  </g>
+  <line x1="320" y1="282" x2="348" y2="282" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <g class="c-blue">
+    <rect x="350" y="256" width="125" height="52" rx="8"/>
+    <text class="t" x="412" y="278" text-anchor="middle">residual stream</text>
+    <text class="ts" x="412" y="294" text-anchor="middle">the belt · 12 layers</text>
+  </g>
+  <line x1="475" y1="282" x2="503" y2="282" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <g class="c-gray">
+    <rect x="505" y="256" width="125" height="52" rx="8"/>
+    <text class="t" x="567" y="278" text-anchor="middle">next-token guess</text>
+    <text class="ts" x="567" y="294" text-anchor="middle">the output</text>
+  </g>
+  <line x1="412" y1="308" x2="412" y2="338" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <g class="c-amber">
+    <rect x="300" y="340" width="225" height="48" rx="8"/>
+    <text class="t" x="412" y="360" text-anchor="middle">hooks → cache</text>
+    <text class="ts" x="412" y="376" text-anchor="middle">one token's 768-number smoothie</text>
+  </g>
+  <text class="ts" x="540" y="368" text-anchor="start" fill="#a6741a">◀ Day 2</text>
+
+  <!-- SECTION 3: VOCABULARY -->
+  <text class="th" x="30" y="422">3 · the vocabulary (how the words nest)</text>
+  <g class="c-blue">
+    <rect x="30" y="434" width="190" height="62" rx="8"/>
+    <text class="t" x="125" y="460" text-anchor="middle">model = company</text>
+    <text class="ts" x="125" y="478" text-anchor="middle">holds 12 layers</text>
+  </g>
+  <line x1="220" y1="465" x2="250" y2="465" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <g class="c-teal">
+    <rect x="250" y="434" width="170" height="62" rx="8"/>
+    <text class="t" x="335" y="460" text-anchor="middle">layer = one worker</text>
+    <text class="ts" x="335" y="478" text-anchor="middle">holds 3,072 neurons</text>
+  </g>
+  <line x1="420" y1="465" x2="450" y2="465" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <g class="c-purple">
+    <rect x="450" y="434" width="200" height="62" rx="8"/>
+    <text class="t" x="550" y="460" text-anchor="middle">neuron = one gauge</text>
+    <text class="ts" x="550" y="478" text-anchor="middle">a single number</text>
+  </g>
+  <text class="ts" x="30" y="516" text-anchor="start" fill="#5f6368">each arrow = zoom in one level deeper</text>
+  <g class="c-gray">
+    <rect x="30" y="528" width="620" height="52" rx="8"/>
+    <text class="t" x="340" y="551" text-anchor="middle">tensor = a box of numbers</text>
+    <text class="ts" x="340" y="569" text-anchor="middle">a token's 768-number smoothie is one tensor; the weights are tensors too</text>
+  </g>
+</svg>

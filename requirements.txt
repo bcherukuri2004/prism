@@ -1,0 +1,5 @@
+# Prism dependencies — we add to this as each day needs something new.
+
+# Day 1: the model + the toolkit for looking inside it
+torch
+transformer_lens
