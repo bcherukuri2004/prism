@@ -18,7 +18,7 @@ change → run it and see it work → explain what happened → next day. Smalle
 - [x] **Day 3 — See why it's confusing.** Ran 30 diverse sentences through GPT-2, inspected layer-6 MLP neurons. Auto-picked a strongly-firing neuron and saw its top triggers were an unrelated jumble (law, cooking, code, sports, ocean) → polysemantic neuron = superposition, live. ✅ `day03_one_neuron.py`
 
 ## Phase 2 — Collect the smoothie
-- [ ] **Day 4 — Pour lots of text through.** Run a text dataset through GPT-2, save one layer's activations.
+- [x] **Day 4 — Pour lots of text through.** Ran 250 docs (128 tokens each) from The Pile through GPT-2, scooped the layer-6 residual smoothie for all 32,000 tokens, saved to `activations/layer6_resid.pt` (94 MB, shape 32000×768). ✅ `day04_collect_activations.py`
 - [ ] **Day 5 — Store it properly.** A simple on-disk activation store (too much for memory).
 
 ## Phase 3 — Build the un-mixer (the SAE)
@@ -52,3 +52,4 @@ change → run it and see it work → explain what happened → next day. Smalle
 - **Day 2 (done):** Wrote `day02_peek_inside.py`. Learned: tokens (sentence → word-chunks), the residual stream (the model's "conveyor belt" of thinking). Used `run_with_cache` to grab layer-6 residual: shape (1, 10, 768) = 1 sentence × 10 tokens × 768 numbers each. Printed the real activation vector for ' ocean'. This is "the smoothie" — real but still blended (SAE later un-mixes it).
 - **Day 2.5 (concept):** Nailed vocabulary: tensor = a box of numbers (the smoothie is one tensor). layer = a worker/station (12 in GPT-2-small, fixed by blueprint). neuron = one gauge/number-slot inside a layer (3,072 per layer). model = the "company." 768 = width of one token's smoothie (varies by model), NOT the neuron count. Saved `docs/concept-map.svg`.
 - **Day 3 (done):** Wrote `day03_one_neuron.py`. Ran 30 topic-diverse sentences, hooked `blocks.6.mlp.hook_post` (3,072 neurons), auto-picked a strong-firing neuron. Its top triggers were an unrelated grab-bag (objected/Add/due/threw/beneath/leapt...) spanning law, cooking, code, sports, ocean. Concrete proof of a polysemantic neuron → superposition. This is *why* single neurons are unreadable and why the SAE is needed.
+- **Day 4 (done):** Wrote `day04_collect_activations.py`. Loaded `NeelNanda/pile-10k`, kept 250 docs cut to 128 tokens, batched through GPT-2, collected `blocks.6.hook_resid_post` for all 32,000 tokens → tensor 32000×768, saved to `activations/layer6_resid.pt` (94 MB, gitignored). This pile is the SAE's training data. Note: residual stream (768 dims), not MLP neurons — the SAE targets the belt.
