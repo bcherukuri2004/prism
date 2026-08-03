@@ -19,7 +19,7 @@ change → run it and see it work → explain what happened → next day. Smalle
 
 ## Phase 2 — Collect the smoothie
 - [x] **Day 4 — Pour lots of text through.** Ran 250 docs (128 tokens each) from The Pile through GPT-2, scooped the layer-6 residual smoothie for all 32,000 tokens, saved to `activations/layer6_resid.pt` (94 MB, shape 32000×768). ✅ `day04_collect_activations.py`
-- [ ] **Day 5 — Store it properly.** A simple on-disk activation store (too much for memory).
+- [x] **Day 5 — Store it properly.** Built `activation_store.py`: `build_shards()` splits the pile into 4 disk shards; `ActivationStore` streams shuffled batches via a memory-capped buffer. Demo served 500 batches of 64 without holding >16k rows in RAM. ✅ (reusable — Day 9 training imports it)
 
 ## Phase 3 — Build the un-mixer (the SAE)
 - [ ] **Day 6 — Un-mix a toy first.** Tiny SAE on fake data where we know the answer.
@@ -53,3 +53,4 @@ change → run it and see it work → explain what happened → next day. Smalle
 - **Day 2.5 (concept):** Nailed vocabulary: tensor = a box of numbers (the smoothie is one tensor). layer = a worker/station (12 in GPT-2-small, fixed by blueprint). neuron = one gauge/number-slot inside a layer (3,072 per layer). model = the "company." 768 = width of one token's smoothie (varies by model), NOT the neuron count. Saved `docs/concept-map.svg`.
 - **Day 3 (done):** Wrote `day03_one_neuron.py`. Ran 30 topic-diverse sentences, hooked `blocks.6.mlp.hook_post` (3,072 neurons), auto-picked a strong-firing neuron. Its top triggers were an unrelated grab-bag (objected/Add/due/threw/beneath/leapt...) spanning law, cooking, code, sports, ocean. Concrete proof of a polysemantic neuron → superposition. This is *why* single neurons are unreadable and why the SAE is needed.
 - **Day 4 (done):** Wrote `day04_collect_activations.py`. Loaded `NeelNanda/pile-10k`, kept 250 docs cut to 128 tokens, batched through GPT-2, collected `blocks.6.hook_resid_post` for all 32,000 tokens → tensor 32000×768, saved to `activations/layer6_resid.pt` (94 MB, gitignored). This pile is the SAE's training data. Note: residual stream (768 dims), not MLP neurons — the SAE targets the belt.
+- **Day 5 (done):** Wrote `activation_store.py` (reusable module). `build_shards()` cut the pile into 4×23 MB shards; `ActivationStore.batches()` streams shuffled [64,768] batches using a 16k-row shuffle buffer, loading shards lazily. Demo: 500 batches served, memory capped. Phase 2 complete — data is ready for the SAE.
