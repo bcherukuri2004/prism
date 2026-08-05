@@ -22,7 +22,8 @@ change → run it and see it work → explain what happened → next day. Smalle
 - [x] **Day 5 — Store it properly.** Built `activation_store.py`: `build_shards()` splits the pile into 4 disk shards; `ActivationStore` streams shuffled batches via a memory-capped buffer. Demo served 500 batches of 64 without holding >16k rows in RAM. ✅ (reusable — Day 9 training imports it)
 
 ## Phase 3 — Build the un-mixer (the SAE)
-- [ ] **Day 6 — Un-mix a toy first.** Tiny SAE on fake data where we know the answer.
+- [x] **Day 6 — Build the toy world.** Planted 8 secret "true features" (unit directions in 20-D), generated 5,000 sparse mixes (~2 active each) + saved the answer key (`codes`). This gives a gradable test bed for the SAE. ✅ `day06_toy_data.py` → `toy/toy_data.pt`
+  - *(Days 7–9 build & train the SAE, validating on this toy first, then real data.)*
 - [ ] **Day 7 — Write the real un-mixer.** Proper SAE module (encoder + decoder) in PyTorch.
 - [ ] **Day 8 — The rulebook (loss).** Reconstruction + sparsity penalty.
 - [ ] **Day 9 — Teach it (small run).** Training loop on the laptop, watch loss drop.
@@ -54,3 +55,5 @@ change → run it and see it work → explain what happened → next day. Smalle
 - **Day 3 (done):** Wrote `day03_one_neuron.py`. Ran 30 topic-diverse sentences, hooked `blocks.6.mlp.hook_post` (3,072 neurons), auto-picked a strong-firing neuron. Its top triggers were an unrelated grab-bag (objected/Add/due/threw/beneath/leapt...) spanning law, cooking, code, sports, ocean. Concrete proof of a polysemantic neuron → superposition. This is *why* single neurons are unreadable and why the SAE is needed.
 - **Day 4 (done):** Wrote `day04_collect_activations.py`. Loaded `NeelNanda/pile-10k`, kept 250 docs cut to 128 tokens, batched through GPT-2, collected `blocks.6.hook_resid_post` for all 32,000 tokens → tensor 32000×768, saved to `activations/layer6_resid.pt` (94 MB, gitignored). This pile is the SAE's training data. Note: residual stream (768 dims), not MLP neurons — the SAE targets the belt.
 - **Day 5 (done):** Wrote `activation_store.py` (reusable module). `build_shards()` cut the pile into 4×23 MB shards; `ActivationStore.batches()` streams shuffled [64,768] batches using a 16k-row shuffle buffer, loading shards lazily. Demo: 500 batches served, memory capped. Phase 2 complete — data is ready for the SAE.
+- **Day 6 (done):** Wrote `day06_toy_data.py`. Built a synthetic test bed with a known answer key: 8 true features (unit vecs in 20-D), 5,000 samples = sparse mixes (~1.97 active avg) + tiny noise. Saved `data`, `true_features`, `codes` to `toy/toy_data.pt`. Purpose: the real SAE can't be graded (no ground truth for GPT-2), so we validate the SAE on this toy first. `torch.manual_seed(0)` for reproducibility.
+- **Note (2026):** Per user preference, commits no longer include the Claude co-author trailer.
