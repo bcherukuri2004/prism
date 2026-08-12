@@ -24,7 +24,7 @@ change → run it and see it work → explain what happened → next day. Smalle
 ## Phase 3 — Build the un-mixer (the SAE)
 - [x] **Day 6 — Build the toy world.** Planted 8 secret "true features" (unit directions in 20-D), generated 5,000 sparse mixes (~2 active each) + saved the answer key (`codes`). This gives a gradable test bed for the SAE. ✅ `day06_toy_data.py` → `toy/toy_data.pt`
   - *(Days 7–9 build & train the SAE, validating on this toy first, then real data.)*
-- [ ] **Day 7 — Write the real un-mixer.** Proper SAE module (encoder + decoder) in PyTorch.
+- [x] **Day 7 — Write the un-mixer.** Built `SparseAutoencoder` (encoder: ReLU((x−b_dec)·W_enc+b_enc); decoder: f·W_dec+b_dec; unit-norm decoder rows, encoder init = decoder transpose). Ran untrained on toy data (20→16→20): reconstruction ≈ do-nothing baseline, as expected. ✅ `sae.py` (reusable)
 - [ ] **Day 8 — The rulebook (loss).** Reconstruction + sparsity penalty.
 - [ ] **Day 9 — Teach it (small run).** Training loop on the laptop, watch loss drop.
 - [ ] **Day 10 — Teach it for real (Colab).** Bigger training run, save trained weights.
