@@ -25,7 +25,7 @@ change → run it and see it work → explain what happened → next day. Smalle
 - [x] **Day 6 — Build the toy world.** Planted 8 secret "true features" (unit directions in 20-D), generated 5,000 sparse mixes (~2 active each) + saved the answer key (`codes`). This gives a gradable test bed for the SAE. ✅ `day06_toy_data.py` → `toy/toy_data.pt`
   - *(Days 7–9 build & train the SAE, validating on this toy first, then real data.)*
 - [x] **Day 7 — Write the un-mixer.** Built `SparseAutoencoder` (encoder: ReLU((x−b_dec)·W_enc+b_enc); decoder: f·W_dec+b_dec; unit-norm decoder rows, encoder init = decoder transpose). Ran untrained on toy data (20→16→20): reconstruction ≈ do-nothing baseline, as expected. ✅ `sae.py` (reusable)
-- [ ] **Day 8 — The rulebook (loss).** Reconstruction + sparsity penalty.
+- [x] **Day 8 — The rulebook (loss).** Added `sae_loss` to `sae.py`: total = reconstruction (MSE/smoothie) + l1_coeff·sparsity (L1 of feature acts). Demo (`day08_loss.py`) on untrained SAE: recon 0.490, L1 0.849, L0 7.5/16 active (answer key wants ~2). Shows the accuracy-vs-sparsity tension the trainer must balance. ✅
 - [ ] **Day 9 — Teach it (small run).** Training loop on the laptop, watch loss drop.
 - [ ] **Day 10 — Teach it for real (Colab).** Bigger training run, save trained weights.
 

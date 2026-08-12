@@ -54,6 +54,22 @@ class SparseAutoencoder(nn.Module):
         return x_hat, f
 
 
+def sae_loss(x, x_hat, f, l1_coeff):
+    """The grading rule (Day 8). Two parts that pull against each other:
+
+      reconstruction = how close the rebuild x_hat is to the original x  (want LOW)
+      sparsity (L1)  = total feature activity per smoothie                (want LOW)
+
+    total = reconstruction + l1_coeff * sparsity
+    l1_coeff sets how hard we push for fewer features. Bigger = sparser but blurrier
+    rebuilds; smaller = sharper rebuilds but messier (denser) features.
+    """
+    reconstruction = (x_hat - x).pow(2).sum(dim=1).mean()   # MSE per smoothie, averaged
+    sparsity       = f.abs().sum(dim=1).mean()              # L1: total feature use, averaged
+    total          = reconstruction + l1_coeff * sparsity
+    return total, reconstruction, sparsity
+
+
 if __name__ == "__main__":
     # Load the toy world from Day 6 and run the untrained SAE on it.
     toy = torch.load("toy/toy_data.pt")
