@@ -30,7 +30,7 @@ change → run it and see it work → explain what happened → next day. Smalle
 - [x] **Day 10 — Teach it for real.** Trained the SAE on the 32k real GPT-2 layer-6 activations (locally, MPS). Normalized inputs (center + scale to avg norm √d). 768→2048→768, l1=2.0, 3000 steps. Result: **98.2% variance explained, L0≈36, only 10/2048 dead.** Saved `activations/gpt2_sae.pt`. ✅ `day10_train_gpt2_sae.py`  *(Colab = optional bigger/higher-quality run: more tokens, 8–32× dict.)*
 
 ## Phase 4 — Read the jars (interpretation)
-- [ ] **Day 11 — What lights it up?** Max-activating examples for a feature.
+- [x] **Day 11 — What lights it up?** Wrote `day11_feature_examples.py`: ran SAE encoder over all 32k tokens, found max-activating examples per feature. Discovered **crisply interpretable features**: #1225 = patent "The present invention relates to…"; #436 = closing HTML/XML tags `</`; #65 = opening curly-quote; #433 = "Q:" forum question header. The SAE genuinely un-mixed real GPT-2 concepts. ✅
 - [ ] **Day 12 — Highlight the exact words.** Token-level highlighting.
 - [ ] **Day 13 — Auto-label with Claude.** Name each feature via the Claude API.
 - [ ] **Day 14 — Prove it's a good un-mixer.** L0, variance explained, dead features, CE recovered.
