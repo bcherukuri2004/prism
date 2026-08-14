@@ -26,7 +26,7 @@ change → run it and see it work → explain what happened → next day. Smalle
   - *(Days 7–9 build & train the SAE, validating on this toy first, then real data.)*
 - [x] **Day 7 — Write the un-mixer.** Built `SparseAutoencoder` (encoder: ReLU((x−b_dec)·W_enc+b_enc); decoder: f·W_dec+b_dec; unit-norm decoder rows, encoder init = decoder transpose). Ran untrained on toy data (20→16→20): reconstruction ≈ do-nothing baseline, as expected. ✅ `sae.py` (reusable)
 - [x] **Day 8 — The rulebook (loss).** Added `sae_loss` to `sae.py`: total = reconstruction (MSE/smoothie) + l1_coeff·sparsity (L1 of feature acts). Demo (`day08_loss.py`) on untrained SAE: recon 0.490, L1 0.849, L0 7.5/16 active (answer key wants ~2). Shows the accuracy-vs-sparsity tension the trainer must balance. ✅
-- [ ] **Day 9 — Teach it (small run).** Training loop on the laptop, watch loss drop.
+- [x] **Day 9 — Teach it (small run).** Wrote `day09_train_toy.py`: Adam training loop (l1_coeff 0.05, lr 1e-3, 4000 steps) with per-step decoder unit-norm. Reconstruction 0.49→0.0048, L0 6.9→~3. **Recovered all 8/8 planted features at >0.99 cosine similarity.** The un-mixer works, proven on data with a known answer. ✅ → `toy/toy_sae.pt`
 - [ ] **Day 10 — Teach it for real (Colab).** Bigger training run, save trained weights.
 
 ## Phase 4 — Read the jars (interpretation)
@@ -56,4 +56,7 @@ change → run it and see it work → explain what happened → next day. Smalle
 - **Day 4 (done):** Wrote `day04_collect_activations.py`. Loaded `NeelNanda/pile-10k`, kept 250 docs cut to 128 tokens, batched through GPT-2, collected `blocks.6.hook_resid_post` for all 32,000 tokens → tensor 32000×768, saved to `activations/layer6_resid.pt` (94 MB, gitignored). This pile is the SAE's training data. Note: residual stream (768 dims), not MLP neurons — the SAE targets the belt.
 - **Day 5 (done):** Wrote `activation_store.py` (reusable module). `build_shards()` cut the pile into 4×23 MB shards; `ActivationStore.batches()` streams shuffled [64,768] batches using a 16k-row shuffle buffer, loading shards lazily. Demo: 500 batches served, memory capped. Phase 2 complete — data is ready for the SAE.
 - **Day 6 (done):** Wrote `day06_toy_data.py`. Built a synthetic test bed with a known answer key: 8 true features (unit vecs in 20-D), 5,000 samples = sparse mixes (~1.97 active avg) + tiny noise. Saved `data`, `true_features`, `codes` to `toy/toy_data.pt`. Purpose: the real SAE can't be graded (no ground truth for GPT-2), so we validate the SAE on this toy first. `torch.manual_seed(0)` for reproducibility.
+- **Day 7 (done):** `sae.py` — `SparseAutoencoder` (encoder ReLU((x−b_dec)·W_enc+b_enc), decoder f·W_dec+b_dec, unit-norm decoder rows, encoder init = decoder.T). Untrained ≈ baseline.
+- **Day 8 (done):** Added `sae_loss` (recon MSE + l1_coeff·L1). `day08_loss.py` showed untrained L0 7.5/16 vs toy's ~2 → the accuracy-vs-sparsity tension.
+- **Day 9 (done):** `day09_train_toy.py` trained the toy SAE. recon 0.49→0.0048, L0→~3, **8/8 true features recovered @ >0.99 cosine.** Milestone: the SAE method works, validated on known ground truth. Next: Day 10 scale to real GPT-2 activations (Colab).
 - **Note (2026):** Per user preference, commits no longer include the Claude co-author trailer.
