@@ -27,7 +27,7 @@ change → run it and see it work → explain what happened → next day. Smalle
 - [x] **Day 7 — Write the un-mixer.** Built `SparseAutoencoder` (encoder: ReLU((x−b_dec)·W_enc+b_enc); decoder: f·W_dec+b_dec; unit-norm decoder rows, encoder init = decoder transpose). Ran untrained on toy data (20→16→20): reconstruction ≈ do-nothing baseline, as expected. ✅ `sae.py` (reusable)
 - [x] **Day 8 — The rulebook (loss).** Added `sae_loss` to `sae.py`: total = reconstruction (MSE/smoothie) + l1_coeff·sparsity (L1 of feature acts). Demo (`day08_loss.py`) on untrained SAE: recon 0.490, L1 0.849, L0 7.5/16 active (answer key wants ~2). Shows the accuracy-vs-sparsity tension the trainer must balance. ✅
 - [x] **Day 9 — Teach it (small run).** Wrote `day09_train_toy.py`: Adam training loop (l1_coeff 0.05, lr 1e-3, 4000 steps) with per-step decoder unit-norm. Reconstruction 0.49→0.0048, L0 6.9→~3. **Recovered all 8/8 planted features at >0.99 cosine similarity.** The un-mixer works, proven on data with a known answer. ✅ → `toy/toy_sae.pt`
-- [ ] **Day 10 — Teach it for real (Colab).** Bigger training run, save trained weights.
+- [x] **Day 10 — Teach it for real.** Trained the SAE on the 32k real GPT-2 layer-6 activations (locally, MPS). Normalized inputs (center + scale to avg norm √d). 768→2048→768, l1=2.0, 3000 steps. Result: **98.2% variance explained, L0≈36, only 10/2048 dead.** Saved `activations/gpt2_sae.pt`. ✅ `day10_train_gpt2_sae.py`  *(Colab = optional bigger/higher-quality run: more tokens, 8–32× dict.)*
 
 ## Phase 4 — Read the jars (interpretation)
 - [ ] **Day 11 — What lights it up?** Max-activating examples for a feature.
