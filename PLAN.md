@@ -32,7 +32,7 @@ change → run it and see it work → explain what happened → next day. Smalle
 ## Phase 4 — Read the jars (interpretation)
 - [x] **Day 11 — What lights it up?** Wrote `day11_feature_examples.py`: ran SAE encoder over all 32k tokens, found max-activating examples per feature. Discovered **crisply interpretable features**: #1225 = patent "The present invention relates to…"; #436 = closing HTML/XML tags `</`; #65 = opening curly-quote; #433 = "Q:" forum question header. The SAE genuinely un-mixed real GPT-2 concepts. ✅
 - [x] **Day 12 — Highlight the exact words.** Wrote `day12_feature_html.py`: shades every token by its activation (mini heatmap) and renders a self-contained `docs/feature_dashboard.html` (6 features). First piece of the Phase-6 UI. ✅
-- [ ] **Day 13 — Auto-label with Claude.** Name each feature via the Claude API.
+- [x] **Day 13 — Label features.** Wrote `day13_autolabel.py` (auto-interp via Claude API, ready + reads gitignored `.env`). No live API key available, so labeled the 6 features by hand in `docs/feature_labels.json`: #1225 patent "invention", #1901 patent "present", #436 closing XML/HTML tag, #433 forum "Q:" header, #65 opening curly-quote, #1164 closing curly-quote. ✅
 - [ ] **Day 14 — Prove it's a good un-mixer.** L0, variance explained, dead features, CE recovered.
 
 ## Phase 5 — The idea knobs

@@ -1,0 +1,8 @@
+{
+  "1225": "Patent boilerplate (\"invention\") — fires on \"invention\" in the stock patent opener \"The present invention relates to…\".",
+  "1901": "Patent/academic \"present\" — fires on \"present\" in formal phrasing like \"The present invention/experiment…\".",
+  "436": "Closing XML/HTML tag — fires on the \"</\" that begins a closing markup tag (</name>, </li>, </description>).",
+  "433": "Forum question header (\"Q:\") — fires on the colon in \"Q:\" that opens a StackExchange-style question.",
+  "65": "Opening curly quote — fires on the opening \u201csmart\u201d double-quote just before a quoted phrase.",
+  "1164": "Closing curly quote — fires on the closing \u201csmart\u201d double-quote at the end of a quoted phrase."
+}
