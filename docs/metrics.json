@@ -1,0 +1,11 @@
+{
+  "layer": 6,
+  "dictionary_size": 2048,
+  "variance_explained_pct": 98.2,
+  "L0_active_features": 35.8,
+  "dead_features": 10,
+  "ce_loss_clean": 3.57,
+  "ce_loss_sae_patched": 4.127,
+  "ce_loss_mean_ablated": 9.906,
+  "ce_loss_recovered_pct": 91.2
+}
