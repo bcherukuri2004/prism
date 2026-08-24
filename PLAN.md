@@ -36,7 +36,7 @@ change → run it and see it work → explain what happened → next day. Smalle
 - [x] **Day 14 — Prove it's a good un-mixer.** Wrote `day14_metrics.py`. Full metrics: **98.2% variance explained, L0 35.8, 10/2048 dead, and 91.2% cross-entropy loss recovered** (clean 3.57 → SAE-patched 4.13 vs mean-ablated 9.91). Saved `docs/metrics.json`. Phase 4 complete. ✅
 
 ## Phase 5 — The idea knobs
-- [ ] **Day 15 — Steering.** Add a feature's direction mid-generation, watch output bend.
+- [x] **Day 15 — Steering.** Wrote `day15_steering.py`: adds `alpha · W_dec[feat] · scale` into the layer-6 residual during generation. Steering feature 1225 (patent) on a weekend prompt: α=12 injected "the invention… how the invention relates to another"; α=24/48 over-steered into "relates relates…". Causal proof the feature is real. **Phase 5 complete.** ✅
 
 ## Phase 6 — The website
 - [ ] **Day 16 — Backend.** FastAPI: fetch feature data + steered generation endpoints.
